@@ -44,11 +44,12 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t ai-devops-app ./app'
-            }
-        }
+        stage('Push Docker Image') {
+    steps {
+        sh 'docker tag ai-devops-app ranjanikmsh/ai-devops-app:latest'
+        sh 'docker push ranjanikmsh/ai-devops-app:latest'
+    }
+}
 
     }
 }
