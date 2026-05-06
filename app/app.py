@@ -1,10 +1,12 @@
 from flask import Flask, jsonify
 import random
+from logger import logger
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
+    logger.info("Homepage accessed")
     return "AI DevOps Running"
 
 @app.route("/health")
@@ -15,7 +17,10 @@ def health():
 
 @app.route("/fail")
 def fail():
-    return 1/0  # force error
+    return 1/0  
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
+
+
