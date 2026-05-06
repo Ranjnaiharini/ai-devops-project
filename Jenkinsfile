@@ -12,19 +12,35 @@ pipeline {
 
         stage('Check Python') {
             steps {
-                sh 'python --version || python3 --version'
+                sh 'python3 --version'
+            }
+        }
+
+        stage('Create Virtual Environment') {
+            steps {
+                sh '''
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install --upgrade pip
+                '''
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r app/requirements.txt || pip3 install -r app/requirements.txt'
+                sh '''
+                . venv/bin/activate
+                pip install flask pytest
+                '''
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'pytest'
+                sh '''
+                . venv/bin/activate
+                pytest
+                '''
             }
         }
 
