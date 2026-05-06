@@ -5,13 +5,14 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/Ranjnaiharini/ai-devops-project.git'
+                git branch: 'main',
+                url: 'https://github.com/Ranjnaiharini/ai-devops-project.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'python -m pip install -r app/requirements.txt'
+                sh 'python3 -m pip install -r app/requirements.txt'
             }
         }
 
