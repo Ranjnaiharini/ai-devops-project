@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.10'
+        }
+    }
 
     stages {
 
@@ -12,7 +16,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'python3 -m pip install -r app/requirements.txt'
+                sh 'pip install -r app/requirements.txt'
             }
         }
 
