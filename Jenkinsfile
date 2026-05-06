@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10'
-        }
-    }
+    agent any
 
     stages {
 
@@ -14,22 +10,29 @@ pipeline {
             }
         }
 
+        stage('Check Python') {
+            steps {
+                sh 'python --version || python3 --version'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r app/requirements.txt'
+                sh 'pip install -r app/requirements.txt || pip3 install -r app/requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'pytest app/test_app.py'
+                sh 'pytest'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t ai-devops-app .'
+                sh 'docker build -t ai-devops-app ./app'
             }
         }
+
     }
 }
